@@ -1,5 +1,7 @@
 import os
 import re
+import cv2
+import pytesseract
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import default_storage
@@ -208,12 +210,7 @@ def extract_text_google_visionFR(request):
 
 # Liste des mots ou phrases à ignorer
 ignored_phrases = [
-    "ROYAUME DU MAROC",
-    "CARTE NATIONALE D'IDENTITE",
-    "المملكة المغربية",
-    "البطاقة الوطنية للتعريف",
-    "المدير العام للأمن الوطني",
-    "عبد اللطيف حموشي"
+
 ]
 
 @csrf_exempt
@@ -239,7 +236,7 @@ def extract_text_google_visionig(request):
             # Effectuer l'extraction du texte avec la langue française et orientation de texte spécifique
             response = client.text_detection(
                 image=image,
-                image_context={'language_hints': ['fr']}  # Spécifier la langue française
+                image_context={'language_hints': ['fr','ar']}  # Spécifier la langue française
             )
             texts = response.text_annotations
 
@@ -263,3 +260,4 @@ def extract_text_google_visionig(request):
             default_storage.delete(file_path)
 
     return JsonResponse({"error": "Invalid request"}, status=400)
+

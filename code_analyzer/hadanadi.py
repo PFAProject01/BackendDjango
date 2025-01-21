@@ -37,29 +37,23 @@ def extract_text_google_vision(request):
 
         # Définir les régions d'intérêt pour extraire les informations spécifiques
         regions = {
-            "prenom": (300, 150, 600, 210),
-            "nom": (300, 190, 590, 250),
-            "date_naissance": (500, 225, 715, 295),
-            "lieu_naissance": (336, 285, 680, 355),
-            "date_validite": (640, 430, 780, 500),
-            "num_carte": (140, 430, 290, 500),
+            "prenom": (250, 120, 600, 210),
+            "nom": (280, 190, 590, 250),
+            "date_naissance": (510, 225, 715, 295),
+            "lieu_naissance": (366, 285, 700, 385),
+            "date_validite": (665, 500, 815, 580),
+            "num_carte":  (98, 500, 290, 590),
         }
 
         # Taille de redimensionnement pour l'image
         new_size = (950, 600)
 
         try:
-            # Redimensionner l'image avant le traitement
-            with Image.open(file_path) as img:
-                img_resized = img.resize(new_size)
-                resized_path = file_path.replace('.jpg', '_resized.jpg')
-                img_resized.save(resized_path)
-
             # Initialiser le client Google Vision
             client = vision.ImageAnnotatorClient()
 
-            # Charger le contenu de l'image redimensionnée
-            with open(resized_path, 'rb') as image_file:
+            # Charger le contenu de l'image
+            with open(file_path, 'rb') as image_file:
                 content = image_file.read()
             image = vision.Image(content=content)
 
@@ -74,10 +68,11 @@ def extract_text_google_vision(request):
             extracted_text = texts[1:]  # Texte sans la description globale
 
             # Analyser les régions spécifiques
-            extracted_data = extract_text_from_region(resized_path, regions, extracted_text)
+            extracted_data = extract_text_from_region(file_path, regions, extracted_text)
 
             # Dessiner les régions sur l'image pour vérification
-            with Image.open(resized_path) as img_resized:
+            with Image.open(file_path) as img:
+                img_resized = img.resize(new_size)
                 draw = ImageDraw.Draw(img_resized)
                 for coords in regions.values():
                     draw.rectangle(coords, outline="red", width=2)
@@ -89,9 +84,7 @@ def extract_text_google_vision(request):
             return JsonResponse({"error": str(e)}, status=500)
 
         finally:
-            # Supprimer les fichiers temporaires
+            # Supprimer le fichier temporaire
             default_storage.delete(file_path)
-            if 'resized_path' in locals():
-                default_storage.delete(resized_path)
 
     return JsonResponse({"error": "Invalid request"}, status=400)
