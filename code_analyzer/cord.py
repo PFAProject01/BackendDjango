@@ -1,16 +1,16 @@
 from PIL import Image, ImageDraw
 
-image_path = "C:/Users/ayoub/Downloads/cinMama2.jpg"  # Remplacez par votre image
+image_path = "C:/Users/ayoub/Downloads/cindyali.jpg"  # Remplacez par votre image
 regions = {
-    "prenom": (250, 120, 600, 210),
-    "nom": (280, 190, 590, 250),
-    "prenomAr": (800, 105, 950, 170),
-    "nomAr": (800, 160, 950, 230),
-    "date_naissance": (510, 225, 715, 295),
-    "lieu_naissance": (360, 285, 700, 385),
-    "lieu_naissanceAr": (680, 264, 950, 320),
-    "date_validite": (665, 500, 815, 580),
-    "num_carte": (98, 500, 290, 590),
+    "nom": (4, 250, 300, 310),
+    "prenom": (4, 180, 390, 240),
+    "prenomAr": (200, 130, 650, 195),
+    "nomAr": (200, 210, 650, 290),
+    "date_naissance": (150, 300, 410, 350),
+    "lieu_naissanceAr": (355, 340, 600, 390),
+    "lieu_naissance": (30, 370, 390, 425),
+    "date_validite": (200, 410, 440, 470),
+    "num_carte": (650, 460, 825, 530),
 }
 # Taille souhaitée pour le redimensionnement
 new_size = (950, 600)  # Largeur, hauteur
