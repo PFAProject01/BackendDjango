@@ -81,11 +81,11 @@ def extract_text_google_visionOLD(request):
             "prenom": (4, 180, 390, 240),
             "prenomAr": (200, 130, 650, 195),
             "nomAr": (200, 210, 650, 290),
-            "date_naissance": (150, 300, 410, 350),
-            "lieu_naissanceAr": (355, 340, 600, 390),
+            "date_naissance": (150, 290, 410, 350),
+            "lieu_naissanceAr": (355, 340, 600, 400),
             "lieu_naissance": (30, 370, 390, 425),
             "date_validite": (200, 410, 440, 470),
-            "num_carte": (650, 460, 825, 530),
+            "num_carte": (620, 460, 845, 530),
         }
 
         # Taille de redimensionnement pour l'image
